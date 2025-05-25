@@ -1,6 +1,6 @@
-const CLIENT_ID = "Iv1.xxxxxxxxxxxxxxxxx"; // ← あなたのGitHub Client ID
-const REDIRECT_URI = "https://yourusername.github.io/login.html";
-const API_ENDPOINT = "https://abc123.execute-api.ap-northeast-1.amazonaws.com/default/callback";
+const CLIENT_ID = "Iv1.Ov23liYhJNALsopN29ER"; // ← あなたのGitHub Client ID
+const REDIRECT_URI = "https://mls-yu.github.io/test/login.html";
+const API_ENDPOINT = "https://gjjf68ffz5.execute-api.ap-northeast-1.amazonaws.com/default/HomepageAuth/callback";
 
 function loginWithGitHub() {
   const githubUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=read:org`;
