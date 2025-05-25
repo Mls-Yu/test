@@ -1,32 +1,31 @@
-const CLIENT_ID = "Ov23liTKkpMrm0S0a3Uk";
+const CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID";
 const REDIRECT_URI = "https://mls-yu.github.io/test/login.html";
-const API_ENDPOINT = "https://gjjf68ffz5.execute-api.ap-northeast-1.amazonaws.com/default/HomepageAuth/callback";
+const LAMBDA_ENDPOINT = "https://your-api-id.execute-api.ap-northeast-1.amazonaws.com/default/AuthHandler";
 
-async function handleRedirect() {
-  const code = new URLSearchParams(window.location.search).get("code");
+document.getElementById("login").onclick = () => {
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth` +
+    `?client_id=${CLIENT_ID}` +
+    `&redirect_uri=${REDIRECT_URI}` +
+    `&response_type=token` +
+    `&scope=email`;
 
-  if (code) {
-    console.log("Detected code:", code);
-    try {
-      const res = await fetch(`${API_ENDPOINT}?code=${code}`);
-      const data = await res.json();
-      console.log("Lambda response:", data);
+  window.location.href = authUrl;
+};
 
-      if (data.token && data.org_ok) {
-        localStorage.setItem("gh_token", data.token);
-        localStorage.setItem("org_ok", "true");
-        window.location.href = "index.html";
-      } else {
-        document.body.innerHTML += "<p>Unauthorized or organization check failed.</p>";
-      }
-    } catch (e) {
-      document.body.innerHTML += "<p>Fetch failed: " + e + "</p>";
+window.onload = async () => {
+  const hash = window.location.hash;
+  if (hash.includes("access_token")) {
+    const params = new URLSearchParams(hash.slice(1));
+    const accessToken = params.get("access_token");
+
+    const res = await fetch(`${LAMBDA_ENDPOINT}?access_token=${accessToken}`);
+    const data = await res.json();
+
+    if (data.domain_ok) {
+      document.getElementById("status").textContent = `ようこそ ${data.email}`;
+      // localStorage.setItem("auth", "true"); 等も可能
+    } else {
+      document.getElementById("status").textContent = "許可されていないドメインです";
     }
-  } else {
-    console.log("No code found, redirecting to GitHub...");
-    const githubUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=read:org`;
-    window.location.href = githubUrl;
   }
-}
-
-handleRedirect();
+};
