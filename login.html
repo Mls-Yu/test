@@ -8,32 +8,7 @@
   <h1>GitHub Login</h1>
   <button onclick="loginWithGitHub()">Login with GitHub</button>
 
-  <script>
-    const CLIENT_ID = "YOUR_CLIENT_ID";
-    const REDIRECT_URI = "https://YOUR_USERNAME.github.io/login.html";
-    const ORG_NAME = "YOUR_ORG_NAME";
-
-    function loginWithGitHub() {
-      const githubUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=read:org`;
-      window.location.href = githubUrl;
-    }
-
-    async function handleRedirect() {
-      const code = new URLSearchParams(window.location.search).get("code");
-      if (!code) return;
-
-      const res = await fetch("https://YOUR_LAMBDA_API_ENDPOINT/callback?code=" + code);
-      const data = await res.json();
-      if (data.token && data.org_ok) {
-        localStorage.setItem("gh_token", data.token);
-        localStorage.setItem("org_ok", "true");
-        window.location.href = "index.html";
-      } else {
-        document.body.innerHTML += "<p>Unauthorized or organization check failed.</p>";
-      }
-    }
-
-    handleRedirect();
-  </script>
+  <!-- 外部JSを読み込む -->
+  <script src="login.js"></script>
 </body>
 </html>
