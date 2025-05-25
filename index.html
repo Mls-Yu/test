@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=login.html">
+  <title>Redirecting...</title>
+  <script>
+    // 簡易セッションチェック（例: localStorageを使った仮トークン）
+    const token = localStorage.getItem("gh_token");
+    const org_ok = localStorage.getItem("org_ok");
+    if (token && org_ok === "true") {
+      // 認証済みならそのまま表示
+      document.write("<h1>HELLO WORLD</h1>");
+    } else {
+      // 未認証ならloginへリダイレクト
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>
