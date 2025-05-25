@@ -1,4 +1,4 @@
-const CLIENT_ID = "Iv1.Ov23liYhJNALsopN29ER";
+const CLIENT_ID = "Ov23liTKkpMrm0S0a3Uk";
 const REDIRECT_URI = "https://mls-yu.github.io/test/login.html";
 const API_ENDPOINT = "https://gjjf68ffz5.execute-api.ap-northeast-1.amazonaws.com/default/HomepageAuth/callback";
 
@@ -24,7 +24,7 @@ async function handleRedirect() {
     }
   } else {
     console.log("No code found, redirecting to GitHub...");
-    const githubUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=read:org`;
+    const githubUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=read:org`;
     window.location.href = githubUrl;
   }
 }
