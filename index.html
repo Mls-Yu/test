@@ -3,19 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>HELLO WORLD</title>
-  <script>
-    const token = localStorage.getItem("gh_token");
-    const org_ok = localStorage.getItem("org_ok");
-    if (token && org_ok === "true") {
-      // 認証済み：表示
-      document.addEventListener("DOMContentLoaded", () => {
-        document.body.innerHTML = "<h1>HELLO WORLD</h1>";
-      });
-    } else {
-      // 未認証：loginへ
-      window.location.href = "login.html";
-    }
-  </script>
+ <script>
+  const token = document.cookie.match(/session=([^;]+)/);
+  if (!token) {
+    window.location.href = "/login.html";
+  }
+</script>
 </head>
 <body>
 </body>
